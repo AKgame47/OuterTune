@@ -1,3 +1,19 @@
+# NovaTune
+
+> **Note:** This is NovaTune, a modified version of OuterTune (GPL-3.0).
+> 
+> **Original Project:** [OuterTune](https://github.com/OuterTune/OuterTune)  
+> **License:** GNU General Public License v3.0
+> 
+> This fork includes additional modular features:
+> - Rewards system for user engagement
+> - Referral program for user acquisition  
+> - Ad integration (optional, using Google Mobile Ads)
+> 
+> See [app/src/main/assets/.about_notice.txt](app/src/main/assets/.about_notice.txt) for full attribution.
+
+---
+
 # OuterTune
 
 <img src="./assets/outertune.webp" height="88" alt="OuterTune app icon">
@@ -109,3 +125,119 @@ way associated with YouTube, Google LLC or any of its affiliates and subsidiarie
 
 Any trademark, service mark, trade name, or other intellectual property rights used in this project
 are owned by the respective owners.
+
+## NovaTune Modules Documentation
+
+### Ads Module (`com.novatune.app.ads`)
+
+The Ads module provides integration with Google Mobile Ads SDK for monetization.
+
+**Features:**
+- Banner ads for in-app placements
+- Native ads for customized ad experiences
+- Rewarded ads to grant user rewards
+
+**Usage:**
+```kotlin
+// Initialize in Application onCreate
+AdManager.initialize(context)
+
+// Load banner ad
+AdManager.loadBannerAd(context, adView)
+
+// Load and show rewarded ad
+AdManager.loadRewardedAd(context) { rewardAmount ->
+    // Handle reward
+}
+```
+
+**Configuration:**
+- Replace test ad unit IDs in `AdManager.kt` with production IDs from AdMob console
+- Ads can be disabled per-user via `AdManager.setAdsEnabled(context, false)`
+
+### Rewards Module (`com.novatune.app.rewards`)
+
+The Rewards module manages a points-based rewards system for user engagement.
+
+**Features:**
+- Track user reward points/coins
+- Grant rewards for actions (watching ads, referrals, daily login)
+- Redeem rewards for premium features
+
+**Usage:**
+```kotlin
+// Add rewards
+RewardManager.addReward(context, 100, "Watched rewarded ad")
+
+// Check balance
+val balance = RewardManager.getRewardBalance(context)
+
+// Redeem rewards
+if (RewardManager.redeemReward(context, 500, "Premium feature")) {
+    // Redemption successful
+}
+```
+
+**Reward Amounts:**
+- `REWARD_WATCH_AD = 10` - Points for watching a rewarded ad
+- `REWARD_REFERRAL = 50` - Points for successful referral
+- `REWARD_DAILY_LOGIN = 5` - Points for daily login
+
+### Referral Module (`com.novatune.app.referral`)
+
+The Referral module implements a referral system for user acquisition.
+
+**Features:**
+- Generate unique referral codes for users
+- Track referrals and reward both referrer and referee
+- Validate referral codes
+
+**Usage:**
+```kotlin
+// Get user's referral code
+val myCode = ReferralManager.getReferralCode(context)
+
+// Apply a referral code
+ReferralManager.applyReferralCode(context, "ABC123") { success ->
+    if (success) {
+        // Both users receive rewards
+    }
+}
+
+// Check referral count
+val count = ReferralManager.getReferralCount(context)
+```
+
+**Notes:**
+- Each user can only apply one referral code
+- Referral codes are 6-character alphanumeric strings
+- Backend integration needed for production to sync referrals across devices
+
+### UI Components
+
+**RewardsFragment** (`com.novatune.app.ui.RewardsFragment`)
+- Compose-based UI for displaying rewards and referral information
+- Shows current balance, referral code, and redemption options
+- Integrates with AdManager for in-UI rewarded ad playback
+
+### Configuration Notes
+
+1. **AdMob Setup:** Update ad unit IDs in `AdManager.kt` with production values
+2. **Google Services:** Update `google-services.json` with new package name `com.novatune.app`
+3. **Backend Integration:** For production, implement backend API to:
+   - Validate referral codes
+   - Sync referral counts across devices
+   - Track reward redemptions
+4. **Storage:** All data stored in SharedPreferences (can be migrated to Room for production)
+
+### Testing
+
+Since network access is limited in the current environment, the modules use:
+- Test ad unit IDs from Google AdMob
+- Local-only referral validation
+- SharedPreferences for data persistence
+
+For production deployment, ensure:
+1. Real ad unit IDs are configured
+2. Backend API is implemented for referral tracking
+3. Proper error handling and analytics are added
