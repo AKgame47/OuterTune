@@ -22,11 +22,11 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.dd3boh.outertune"
+    namespace = "com.novatune.app"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.dd3boh.outertune"
+        applicationId = "com.novatune.app"
         minSdk = 24
         targetSdk = 36
         versionCode = 70
@@ -264,6 +264,9 @@ dependencies {
     // sdk24 support
     // Support for N is officially unsupported even it the app should still work. Leave this outside of the version catalog.
     implementation("androidx.webkit:webkit:1.14.0")
+
+    // Google Play Services Ads for NovaTune features
+    implementation("com.google.android.gms:play-services-ads:22.2.0")
 }
 
 afterEvaluate {
