@@ -1,0 +1,54 @@
+NovaTune - GPL-3.0 Attribution Notice
+=====================================
+
+This application is based on OuterTune, which is licensed under GPL-3.0.
+
+Original Project: OuterTune
+Copyright (C) 2024-2025 OuterTune Project
+License: GNU General Public License v3.0
+Source: https://github.com/OuterTune/OuterTune
+
+OuterTune is itself a fork of InnerTune:
+Copyright (C) 2024 z-huang/InnerTune
+License: GNU General Public License v3.0
+Source: https://github.com/z-huang/InnerTune
+
+---
+
+NovaTune Modifications:
+Copyright (C) 2025 NovaTune
+License: GNU General Public License v3.0
+
+This modified version (NovaTune) includes the following additional features:
+- Ads integration using Google Mobile Ads SDK
+- Rewards system for user engagement
+- Referral program for user acquisition
+- Additional UI components for rewards and referrals
+
+All modifications maintain the GPL-3.0 license and are provided with full source code.
+
+---
+
+GNU GENERAL PUBLIC LICENSE
+Version 3, 29 June 2007
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+---
+
+Full license text available at: https://www.gnu.org/licenses/gpl-3.0.txt
+
+For more information about OuterTune and InnerTune, please visit:
+- OuterTune: https://github.com/OuterTune/OuterTune
+- InnerTune: https://github.com/z-huang/InnerTune

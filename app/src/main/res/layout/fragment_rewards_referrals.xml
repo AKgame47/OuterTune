@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+ * Copyright (C) 2025 NovaTune
+ *
+ * SPDX-License-Identifier: GPL-3.0
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- This layout is a placeholder for rewards and referrals UI.
+         The actual UI is implemented in RewardsFragment.kt using Compose. -->
+    
+    <TextView
+        android:id="@+id/rewards_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/rewards_title"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp" />
+    
+    <TextView
+        android:id="@+id/rewards_balance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/rewards_balance"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp" />
+    
+    <TextView
+        android:id="@+id/referral_code_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/referral_code"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp" />
+    
+    <TextView
+        android:id="@+id/referral_code_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp" />
+
+</LinearLayout>

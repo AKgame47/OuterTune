@@ -337,4 +337,16 @@ We recycle translations from upstream, they are pulled periodically. -->
     <string name="new_version_available">New version available</string>
     <string name="translation_models">Translation Models</string>
     <string name="clear_translation_models">Clear translation models</string>
+
+    <!-- NovaTune Rewards and Referral strings -->
+    <string name="rewards_title">Rewards &amp; Referrals</string>
+    <string name="rewards_balance">Reward Balance</string>
+    <string name="referral_code">Your Referral Code</string>
+    <string name="referral_share">Share this code with friends!</string>
+    <string name="referral_applied">Referral code applied successfully</string>
+    <string name="referral_invalid">Invalid or already used referral code</string>
+    <string name="watch_ad">Watch Ad</string>
+    <string name="ad_reward">+%d points</string>
+    <string name="redeem_rewards">Redeem Rewards</string>
+    <string name="coming_soon">Coming soon!</string>
 </resources>
