@@ -1616,10 +1616,10 @@ class MainActivity : ComponentActivity() {
     }
 
     companion object {
-        const val ACTION_SEARCH = "com.dd3boh.outertune.action.SEARCH"
-        const val ACTION_SONGS = "com.dd3boh.outertune.action.SONGS"
-        const val ACTION_ALBUMS = "com.dd3boh.outertune.action.ALBUMS"
-        const val ACTION_PLAYLISTS = "com.dd3boh.outertune.action.PLAYLISTS"
+        const val ACTION_SEARCH = "com.novatune.app.action.SEARCH"
+        const val ACTION_SONGS = "com.novatune.app.action.SONGS"
+        const val ACTION_ALBUMS = "com.novatune.app.action.ALBUMS"
+        const val ACTION_PLAYLISTS = "com.novatune.app.action.PLAYLISTS"
     }
 }
 

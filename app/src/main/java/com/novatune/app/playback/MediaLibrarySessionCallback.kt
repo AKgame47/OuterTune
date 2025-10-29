@@ -473,7 +473,7 @@ class MediaLibrarySessionCallback @Inject constructor(
             )
             .build()
 
-    private fun com.dd3boh.outertune.models.MediaMetadata.toMediaItem(isPlayable: Boolean = true, isBrowsable: Boolean = false) = MediaItem.Builder()
+    private fun com.novatune.app.models.MediaMetadata.toMediaItem(isPlayable: Boolean = true, isBrowsable: Boolean = false) = MediaItem.Builder()
         .setMediaId(id)
         .setUri(id)
         .setCustomCacheKey(id)
