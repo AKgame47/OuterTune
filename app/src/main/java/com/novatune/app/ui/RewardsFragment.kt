@@ -31,11 +31,11 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberSnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import com.novatune.app.ads.AdManager
 import com.novatune.app.referral.ReferralManager
 import com.novatune.app.rewards.RewardManager
+import kotlinx.coroutines.launch
 
 /**
  * Rewards & Referrals screen:
@@ -59,6 +60,7 @@ fun RewardsFragment(
 ) {
     val context = LocalContext.current
     val snackbar = rememberSnackbarHostState()
+    val scope = rememberCoroutineScope()
 
     var coinBalance by remember { mutableIntStateOf(RewardManager.getCoinBalance(context)) }
     var premiumDays by remember { mutableIntStateOf(RewardManager.getPremiumDaysRemaining(context)) }
@@ -119,20 +121,24 @@ fun RewardsFragment(
                                                         "Watched rewarded ad"
                                                     )
                                                     coinBalance = RewardManager.getCoinBalance(context)
-                                                    snackbar.showSnackbar(
-                                                        "You earned +${RewardManager.COINS_WATCH_AD} coin",
-                                                        withDismissAction = true,
-                                                        duration = SnackbarDuration.Short
-                                                    )
+                                                    scope.launch {
+                                                        snackbar.showSnackbar(
+                                                            "You earned +${RewardManager.COINS_WATCH_AD} coin",
+                                                            withDismissAction = true,
+                                                            duration = SnackbarDuration.Short
+                                                        )
+                                                    }
                                                 }
                                             }
                                         },
                                         onAdFailedToLoad = {
-                                            snackbar.showSnackbar(
-                                                "Failed to load ad. Try again later.",
-                                                withDismissAction = true,
-                                                duration = SnackbarDuration.Short
-                                            )
+                                            scope.launch {
+                                                snackbar.showSnackbar(
+                                                    "Failed to load ad. Try again later.",
+                                                    withDismissAction = true,
+                                                    duration = SnackbarDuration.Short
+                                                )
+                                            }
                                         }
                                     )
                                 },
@@ -173,9 +179,9 @@ fun RewardsFragment(
                                 if (RewardManager.redeemOneDayPremium(context)) {
                                     premiumDays = RewardManager.getPremiumDaysRemaining(context)
                                     coinBalance = RewardManager.getCoinBalance(context)
-                                    snackbar.showSnackbar("Premium activated for 1 day", withDismissAction = true)
+                                    scope.launch { snackbar.showSnackbar("Premium activated for 1 day", withDismissAction = true) }
                                 } else {
-                                    snackbar.showSnackbar("Not enough coins (need 7)", withDismissAction = true)
+                                    scope.launch { snackbar.showSnackbar("Not enough coins (need 7)", withDismissAction = true) }
                                 }
                             },
                             modifier = Modifier.fillMaxWidth()
@@ -188,9 +194,9 @@ fun RewardsFragment(
                                 if (RewardManager.redeemTwoDaysPremium(context)) {
                                     premiumDays = RewardManager.getPremiumDaysRemaining(context)
                                     coinBalance = RewardManager.getCoinBalance(context)
-                                    snackbar.showSnackbar("Premium activated for 2 days", withDismissAction = true)
+                                    scope.launch { snackbar.showSnackbar("Premium activated for 2 days", withDismissAction = true) }
                                 } else {
-                                    snackbar.showSnackbar("Not enough coins (need 12)", withDismissAction = true)
+                                    scope.launch { snackbar.showSnackbar("Not enough coins (need 12)", withDismissAction = true) }
                                 }
                             },
                             modifier = Modifier.fillMaxWidth()
@@ -224,8 +230,7 @@ fun RewardsFragment(
                             OutlinedButton(onClick = {
                                 val cm = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                                 cm.setPrimaryClip(ClipData.newPlainText("Referral Code", referralCode))
-                                // show snackbar
-                                LaunchedEffect(Unit) {
+                                scope.launch {
                                     snackbar.showSnackbar("Copied", withDismissAction = true, duration = SnackbarDuration.Short)
                                 }
                             }) { Text("Copy") }
@@ -266,14 +271,14 @@ fun RewardsFragment(
                                         if (success) {
                                             hasAppliedReferral = true
                                             coinBalance = RewardManager.getCoinBalance(context)
-                                            LaunchedEffect(Unit) {
+                                            scope.launch {
                                                 snackbar.showSnackbar(
                                                     "Referral applied (+${RewardManager.COINS_REFERRAL_SUCCESS} coins)",
                                                     withDismissAction = true
                                                 )
                                             }
                                         } else {
-                                            LaunchedEffect(Unit) {
+                                            scope.launch {
                                                 snackbar.showSnackbar(
                                                     "Invalid code or already used",
                                                     withDismissAction = true
