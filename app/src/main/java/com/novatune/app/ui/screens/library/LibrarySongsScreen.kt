@@ -372,6 +372,14 @@ fun LibrarySongsScreen(
                             .fillMaxWidth()
                             .animateItem()
                     )
+
+                    // Insert a native ad occasionally in the list (non-intrusive)
+                    if (index != 0 && index % 12 == 6) {
+                        com.novatune.app.ads.NativeAdCard(
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp, vertical = 8.dp)
+                        )
+                    }
                 }
             }
         }

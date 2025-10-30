@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.MoreVert
@@ -251,11 +252,17 @@ fun OnlineSearchResult(
                 }
             }
         } else {
-            items(
+            itemsIndexed(
                 items = itemsPage?.items.orEmpty(),
-                key = { it.id }
-            ) { item ->
+                key = { index, it -> "${it.id}#$index" }
+            ) { index, item ->
                 ytItemContent(item, itemsPage?.items.orEmpty())
+                if (index != 0 && index % 12 == 5) {
+                    com.novatune.app.ads.NativeAdCard(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                    )
+                }
             }
 
             if (itemsPage?.continuation != null) {

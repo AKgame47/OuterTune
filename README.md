@@ -1,19 +1,20 @@
 # NovaTune
 
-> **Note:** This is NovaTune, a modified version of OuterTune (GPL-3.0).
-> 
-> **Original Project:** [OuterTune](https://github.com/OuterTune/OuterTune)  
-> **License:** GNU General Public License v3.0
-> 
-> This fork includes additional modular features:
-> - Rewards system for user engagement
-> - Referral program for user acquisition  
-> - Ad integration (optional, using Google Mobile Ads)
-> 
-> See [app/src/main/assets/.about_notice.txt](app/src/main/assets/.about_notice.txt) for full attribution.
+> Modified from OuterTune (GPL-3.0). Credits to the OuterTune developers.
+>
+> Original Project: https://github.com/OuterTune/OuterTune  
+> License: GNU General Public License v3.0-only
+>
+> This fork (NovaTune) adds modular, opt-in features:
+> - Banner ads (bottom of MainActivity and Player screen)
+> - Native ads within lists (songs, albums, search results)
+> - Rewarded ads for Ad Coins and Premium time
+> - Referral system (Ad Coin rewards)
+>
+> All additions are implemented in modular managers and Compose UI and do not modify playback or core logic. See [Modules](#novatune-modules-documentation) for details and GPL compliance notes.
 
 ---
-
+ 
 # OuterTune
 
 <img src="./assets/outertune.webp" height="88" alt="OuterTune app icon">
@@ -126,118 +127,108 @@ way associated with YouTube, Google LLC or any of its affiliates and subsidiarie
 Any trademark, service mark, trade name, or other intellectual property rights used in this project
 are owned by the respective owners.
 
+## NovaTune Web (PWA scaffold)
+
+A minimal, PWA-ready web app scaffold is available in the `web/` directory.
+
+Quick start:
+1. cd web
+2. npm install
+3. npm run dev
+4. Open http://localhost:3000
+
+Build & run production:
+- npm run build
+- npm start
+
+Notes:
+- Ads are placeholders (BannerAd, NativeAdCard). Integrate Google Ad Manager or AdSense according to your policies.
+- Rewards & Referrals are implemented with localStorage for demo parity. Hook backend to validate referrals and persist data.
+- Dark theme and basic styling included in `app/globals.css`.
+
 ## NovaTune Modules Documentation
 
 ### Ads Module (`com.novatune.app.ads`)
 
-The Ads module provides integration with Google Mobile Ads SDK for monetization.
+Google Mobile Ads integration (modular, Compose-friendly).
 
-**Features:**
-- Banner ads for in-app placements
-- Native ads for customized ad experiences
-- Rewarded ads to grant user rewards
+- Banner Ads: shown at the bottom of MainActivity and Player screen. Loads asynchronously and auto-hides on failure. Respects insets and theme.
+- Native Advanced Ads: injected into scrollable lists (Songs, Albums - list view, Search results) every ~12 items with rounded corners, elevation, and fade-in.
+- Rewarded Ads: used to grant Ad Coins.
 
-**Usage:**
+Usage (init):
 ```kotlin
-// Initialize in Application onCreate
+// Application.onCreate()
 AdManager.initialize(context)
-
-// Load banner ad
-AdManager.loadBannerAd(context, adView)
-
-// Load and show rewarded ad
-AdManager.loadRewardedAd(context) { rewardAmount ->
-    // Handle reward
-}
 ```
 
-**Configuration:**
-- Replace test ad unit IDs in `AdManager.kt` with production IDs from AdMob console
-- Ads can be disabled per-user via `AdManager.setAdsEnabled(context, false)`
+Configuration:
+- Provided ID: `ca-app-pub-4437286732065224~7273498745` (as supplied). If it is an App ID, test unit IDs are used by default; replace with your real unit IDs for banner/native/reward in AdMob.
+- Toggle per-user via `AdManager.setAdsEnabled(context, false)`.
 
 ### Rewards Module (`com.novatune.app.rewards`)
 
-The Rewards module manages a points-based rewards system for user engagement.
+Ad Coins + Premium system.
 
-**Features:**
-- Track user reward points/coins
-- Grant rewards for actions (watching ads, referrals, daily login)
-- Redeem rewards for premium features
+Rules:
+- 1 watched rewarded ad = +1 coin
+- Valid first-time referral (referrer or referee) = +2 coins
+- 7 coins → 1 day Premium
+- 12 coins → 2 days Premium
 
-**Usage:**
+API:
 ```kotlin
-// Add rewards
-RewardManager.addReward(context, 100, "Watched rewarded ad")
+// Coins
+val coins = RewardManager.getCoinBalance(context)
+RewardManager.addCoins(context, RewardManager.COINS_WATCH_AD, "Watched ad")
 
-// Check balance
-val balance = RewardManager.getRewardBalance(context)
+// Premium status
+val active = RewardManager.isPremiumActive(context)
+val daysLeft = RewardManager.getPremiumDaysRemaining(context)
 
-// Redeem rewards
-if (RewardManager.redeemReward(context, 500, "Premium feature")) {
-    // Redemption successful
-}
+// Redeem
+RewardManager.redeemOneDayPremium(context) // spends 7
+RewardManager.redeemTwoDaysPremium(context) // spends 12
 ```
-
-**Reward Amounts:**
-- `REWARD_WATCH_AD = 10` - Points for watching a rewarded ad
-- `REWARD_REFERRAL = 50` - Points for successful referral
-- `REWARD_DAILY_LOGIN = 5` - Points for daily login
 
 ### Referral Module (`com.novatune.app.referral`)
 
-The Referral module implements a referral system for user acquisition.
+Referral system with Ad Coin rewards.
 
-**Features:**
-- Generate unique referral codes for users
-- Track referrals and reward both referrer and referee
-- Validate referral codes
+- Each user gets a 6-char referral code on first launch.
+- Referrer gets +2 coins for every valid first-time install using their code (backend validation recommended).
+- Referee can apply a code once and receives +2 coins.
 
-**Usage:**
+Usage:
 ```kotlin
-// Get user's referral code
 val myCode = ReferralManager.getReferralCode(context)
 
-// Apply a referral code
 ReferralManager.applyReferralCode(context, "ABC123") { success ->
-    if (success) {
-        // Both users receive rewards
-    }
+    // Referee gets coins locally; backend should reward referrer
 }
 
-// Check referral count
-val count = ReferralManager.getReferralCount(context)
+ReferralManager.incrementReferralCount(context) // called after backend validation
 ```
-
-**Notes:**
-- Each user can only apply one referral code
-- Referral codes are 6-character alphanumeric strings
-- Backend integration needed for production to sync referrals across devices
 
 ### UI Components
 
-**RewardsFragment** (`com.novatune.app.ui.RewardsFragment`)
-- Compose-based UI for displaying rewards and referral information
-- Shows current balance, referral code, and redemption options
-- Integrates with AdManager for in-UI rewarded ad playback
+Rewards & Referrals screen (`com.novatune.app.ui.RewardsFragment`)
+- Shows coin balance, progress to next premium target, and premium days remaining
+- Watch Ad button (+1 coin) with confirmation
+- Referral code with Copy/Share; Apply Code for new users
+- Coin redemption buttons (1 day / 2 days)
 
 ### Configuration Notes
 
-1. **AdMob Setup:** Update ad unit IDs in `AdManager.kt` with production values
-2. **Google Services:** Update `google-services.json` with new package name `com.novatune.app`
-3. **Backend Integration:** For production, implement backend API to:
+1. AdMob: Set real unit IDs in AdManager. Provided string `ca-app-pub-4437286732065224~7273498745` is kept; replace with unit IDs as needed.
+2. Google Services: ensure `google-services.json` matches `com.novatune.app`.
+3. Backend (optional but recommended):
    - Validate referral codes
-   - Sync referral counts across devices
-   - Track reward redemptions
-4. **Storage:** All data stored in SharedPreferences (can be migrated to Room for production)
+   - Prevent duplicate/self-referrals
+   - Confirm first-time installs and call `incrementReferralCount`
+4. Storage: SharedPreferences; can be migrated to Room.
 
 ### Testing
 
-Since network access is limited in the current environment, the modules use:
-- Test ad unit IDs from Google AdMob
-- Local-only referral validation
-- SharedPreferences for data persistence
-
-For production deployment, ensure:
-1. Real ad unit IDs are configured
-2. Backend API is implemented for referral tracking
-3. Proper error handling and analytics are added
+- Uses Google test ad units when only an App ID is provided.
+- Graceful no-op when offline or ads fail to load.

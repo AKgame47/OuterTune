@@ -969,6 +969,14 @@ class MainActivity : ComponentActivity() {
                                     composable("account") {
                                         AccountScreen(navController, scrollBehavior)
                                     }
+                                    composable("rewards") {
+                                        com.novatune.app.ui.RewardsFragment(
+                                            modifier = Modifier
+                                                .fillMaxSize()
+                                                .padding(bottom = if (!playerBottomSheetState.isDismissed) MiniPlayerHeight else 0.dp)
+                                                .navigationBarsPadding()
+                                        )
+                                    }
 
                                     composable(
                                         route = "browse/{browseId}",
@@ -1520,6 +1528,13 @@ class MainActivity : ComponentActivity() {
                                 navbar()
                                 bottomSheetMenu()
                             }
+
+                            // Bottom banner ad (auto-hides on failure), respects insets to avoid overlap
+                            com.novatune.app.ads.BannerAd(
+                                modifier = Modifier
+                                    .windowInsetsPadding(LocalPlayerAwareWindowInsets.current)
+                                    .align(Alignment.BottomCenter)
+                            )
 
                             SnackbarHost(
                                 hostState = snackbarHostState,

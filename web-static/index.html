@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>NovaTune Web</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script defer src="./main.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a href="./index.html" class="brand">NovaTune</a>
+      <div class="spacer"></div>
+      <a href="./search.html">Search</a>
+      <a href="./rewards.html">Rewards</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>NovaTune Web</h1>
+    <p class="mt-8">Welcome to the NovaTune advanced web app scaffold.</p>
+
+    <div class="card mt-16">
+      <h2>Quick Play</h2>
+      <p class="mt-8 muted">Paste a YouTube URL to play the full song/video. Set your YouTube API key in Search for full search results.</p>
+      <div class="row mt-8">
+        <input id="yt-url-home" class="input" placeholder="https://www.youtube.com/watch?v=..." />
+        <button class="button" onclick="playYouTubeUrlHome()">Play</button>
+      </div>
+      <div class="mt-16">
+        <iframe id="yt-player-home" width="100%" height="360" src="" title="NovaTune Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <div class="card mt-16">
+      <h2>Library</h2>
+      <p class="mt-8">This is a placeholder view. Implement your web data layer here.</p>
+      <div id="native-ad" class="card mt-16">
+        <strong>Sponsored</strong>
+        <p class="mt-8 muted">Native Ad (placeholder). Configure Google Ad Manager/AdSense to show real ads.</p>
+      </div>
+    </div>
+
+    <div id="banner-ad" class="card mt-16" style="min-height:60px;display:flex;align-items:center;justify-content:center;">
+      <span class="muted">Banner Ad (placeholder)</span>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <small>Modified from OuterTune (GPL-3.0). © NovaTune</small>
+  </footer>
+</body>
+</html>

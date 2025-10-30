@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Search • NovaTune Web</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script defer src="./main.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a href="./index.html" class="brand">NovaTune</a>
+      <div class="spacer"></div>
+      <a href="./search.html">Search</a>
+      <a href="./rewards.html">Rewards</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Search</h1>
+
+    <div class="card mt-16">
+      <h2>Playback</h2>
+      <p class="mt-8 muted">Play real songs via YouTube by setting your YouTube Data API key below, or paste a YouTube URL. Fallback uses iTunes previews.</p>
+      <div class="row mt-8">
+        <input id="yt-api-key" class="input" placeholder="YouTube API Key (stores locally)" />
+        <button class="button" onclick="saveApiKey()">Save API Key</button>
+      </div>
+      <div class="row mt-8">
+        <input id="yt-url" class="input" placeholder="Paste YouTube URL (e.g., https://www.youtube.com/watch?v=...)" />
+        <button class="button" onclick="playYouTubeUrl()">Play URL</button>
+      </div>
+      <div class="mt-16" id="player">
+        <iframe id="yt-player" width="100%" height="360" src="" title="NovaTune Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;" allowfullscreen></iframe>
+        <audio id="audioPlayer" controls class="mt-16" style="width:100%"></audio>
+      </div>
+    </div>
+
+    <div class="row mt-16">
+      <input id="query" class="input" placeholder="Search..." />
+      <button class="button" onclick="runSearch()">Search</button>
+    </div>
+
+    <div id="results" class="mt-16"></div>
+
+    <div class="card mt-16">
+      <h2>Recommendations</h2>
+      <div id="recommendations" class="mt-8"></div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <small>Modified from OuterTune (GPL-3.0). © NovaTune</small>
+  </footer>
+</body>
+</html>
