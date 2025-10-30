@@ -17,7 +17,9 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListStanewt</e
+te
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.List
 import androidx.compose.material.icons.rounded.Album
@@ -290,11 +292,11 @@ fun LibraryAlbumsScreen(
                                 )
                             }
                         }
-                        items(
+                        itemsIndexed(
                             items = albums,
-                            key = { it.id },
-                            contentType = { CONTENT_TYPE_ALBUM }
-                        ) { album ->
+                            key = { _, it -> it.id },
+                            contentType = { _, _ -> CONTENT_TYPE_ALBUM }
+                        ) { index, album ->
                             LibraryAlbumListItem(
                                 navController = navController,
                                 menuState = menuState,
@@ -303,6 +305,12 @@ fun LibraryAlbumsScreen(
                                 isPlaying = isPlaying,
                                 modifier = Modifier.animateItem()
                             )
+                            if (index != 0 && index % 12 == 6) {
+                                com.novatune.app.ads.NativeAdCard(
+                                    modifier = Modifier
+                                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                                )
+                            }
                         }
                     }
 

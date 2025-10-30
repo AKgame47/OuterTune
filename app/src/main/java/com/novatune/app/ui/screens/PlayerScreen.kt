@@ -3,6 +3,7 @@ package com.novatune.app.ui.screens
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Alignment
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -11,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.novatune.app.LocalPlayerConnection
+import com.novatune.app.LocalPlayerAwareWindowInsets
 import com.novatune.app.constants.DEFAULT_PLAYER_BACKGROUND
 import com.novatune.app.constants.DarkMode
 import com.novatune.app.constants.DarkModeKey
@@ -65,5 +67,13 @@ fun PlayerScreen(
             navController = navController
         )
 
+        // Banner ad for the player screen; respects player-aware insets and auto-hides on failure
+        com.novatune.app.ads.BannerAd(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .then(androidx.compose.ui.Modifier
+                    .windowInsetsPadding(LocalPlayerAwareWindowInsets.current)
+                )
+        )
     }
 }

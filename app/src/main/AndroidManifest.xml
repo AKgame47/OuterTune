@@ -129,6 +129,11 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
+        <!-- AdMob App ID (as provided). Replace with unit-specific IDs if needed. -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-4437286732065224~7273498745" />
+
         <service
             android:name=".playback.MusicService"
             android:exported="true"
