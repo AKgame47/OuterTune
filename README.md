@@ -127,6 +127,25 @@ way associated with YouTube, Google LLC or any of its affiliates and subsidiarie
 Any trademark, service mark, trade name, or other intellectual property rights used in this project
 are owned by the respective owners.
 
+## NovaTune Web (PWA scaffold)
+
+A minimal, PWA-ready web app scaffold is available in the `web/` directory.
+
+Quick start:
+1. cd web
+2. npm install
+3. npm run dev
+4. Open http://localhost:3000
+
+Build & run production:
+- npm run build
+- npm start
+
+Notes:
+- Ads are placeholders (BannerAd, NativeAdCard). Integrate Google Ad Manager or AdSense according to your policies.
+- Rewards & Referrals are implemented with localStorage for demo parity. Hook backend to validate referrals and persist data.
+- Dark theme and basic styling included in `app/globals.css`.
+
 ## NovaTune Modules Documentation
 
 ### Ads Module (`com.novatune.app.ads`)
