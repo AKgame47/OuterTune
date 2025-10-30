@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Search • NovaTune Web</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script defer src="./main.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a href="./index.html" class="brand">NovaTune</a>
+      <div class="spacer"></div>
+      <a href="./search.html">Search</a>
+      <a href="./rewards.html">Rewards</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Search</h1>
+    <div class="row mt-16">
+      <input id="query" class="input" placeholder="Search..." />
+      <button class="button" onclick="runSearch()">Search</button>
+    </div>
+
+    <div id="results" class="mt-16"></div>
+  </main>
+
+  <footer class="site-footer">
+    <small>Modified from OuterTune (GPL-3.0). © NovaTune</small>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Rewards & Referrals • NovaTune Web</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script defer src="./rewards.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a href="./index.html" class="brand">NovaTune</a>
+      <div class="spacer"></div>
+      <a href="./search.html">Search</a>
+      <a href="./rewards.html">Rewards</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Rewards & Referrals</h1>
+
+    <div class="card mt-16">
+      <h2>Ad Coins</h2>
+      <p id="coins" class="mt-8 big"></p>
+      <div class="mt-8 bar">
+        <div id="bar-progress" class="bar-progress"></div>
+      </div>
+      <p id="next-target" class="mt-8"></p>
+      <button class="button mt-8" onclick="watchAd()">Watch Ad (+1)</button>
+    </div>
+
+    <div class="card mt-16">
+      <h2>Premium</h2>
+      <p id="premium-status" class="mt-8"></p>
+      <div class="row mt-8">
+        <button class="button" onclick="redeem(1)">Redeem 1 Day (7)</button>
+        <button class="button" onclick="redeem(2)">Redeem 2 Days (12)</button>
+      </div>
+    </div>
+
+    <div class="card mt-16">
+      <h2>Referral</h2>
+      <p class="mt-8">Your Code:</p>
+      <p id="ref-code" class="code"></p>
+      <div class="row mt-8">
+        <button class="button" onclick="copyCode()">Copy</button>
+        <button class="button" onclick="shareCode()">Share</button>
+      </div>
+      <p class="mt-8">Apply a referral code (demo):</p>
+      <div class="row mt-8">
+        <input id="ref-input" class="input" placeholder="ABC123" maxlength="6" />
+        <button class="button" onclick="applyReferral()">Apply</button>
+      </div>
+    </div>
+
+    <div id="banner-ad" class="card mt-16" style="min-height:60px;display:flex;align-items:center;justify-content:center;">
+      <span class="muted">Banner Ad (placeholder)</span>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <small>Modified from OuterTune (GPL-3.0). © NovaTune</small>
+  </footer>
+</body>
+</html>
