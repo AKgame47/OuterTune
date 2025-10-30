@@ -1,5 +1,6 @@
 import "./globals.css";
 import React from "react";
+import Script from "next/script";
 
 export const metadata = {
   title: "NovaTune Web",
@@ -7,8 +8,21 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
+
   return (
     <html lang="en">
+      <head>
+        {adsenseClient && (
+          <Script
+            id="adsense-js"
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
+            crossOrigin="anonymous"
+            strategy="afterInteractive"
+          />
+        )}
+      </head>
       <body>
         <header className="site-header">
           <nav className="nav">
